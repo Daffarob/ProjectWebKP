@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Samafiltro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-200">
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden flex flex-row">
+        <!-- Left side: Login -->
+        <div class="w-1/2 p-12 bg-gradient-to-br from-gray-900 to-gray-700 flex flex-col justify-center relative">
+            <a href="/" class="absolute top-6 left-6 text-white text-2xl">
+                &#8592;
+            </a>
+            <div>
+                <h2 class="text-white text-3xl font-bold mb-3">Masuk Ke Akun Anda</h2>
+                <p class="text-gray-300 mb-8">Silahkan masukkan email dan kata sandi yang sudah terdaftar</p>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="mb-4">
+                        <label class="block text-gray-200 mb-2" for="email">Alamat Email</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}"
+                            class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none"
+                            required autofocus>
+                        @error('email')
+                            <span class="text-red-400 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-6 relative">
+                        <label class="block text-gray-200 mb-2" for="password">Kata Sandi</label>
+                        <input id="password" type="password" name="password"
+                            class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none"
+                            required>
+                        <span onclick="togglePassword()" class="absolute top-9 right-3 text-gray-300 cursor-pointer">
+                            👁️
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between mb-6">
+                        <a href="{{ route('password.request') }}" class="text-gray-300 text-sm hover:underline">Lupa Password?</a>
+                        <span class="text-gray-300 text-sm">atau <a href="/daftar" class="underline">Daftar</a></span>
+                    </div>
+                    <button type="submit"
+                        class="w-full py-2 rounded bg-gray-600 hover:bg-gray-700 text-white font-semibold transition">
+                        Masuk
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- Right side: Register Info -->
+        <div class="w-1/2 p-12 flex flex-col justify-center items-center bg-gradient-to-br from-gray-100 to-gray-300 relative">
+            <img src="/logo.png" alt="Samafiltro Logo" class="absolute top-6 right-6 h-10">
+            <h2 class="text-gray-700 text-2xl font-bold mb-4">Selamat Datang !</h2>
+            <p class="text-gray-600 mb-8">Anda belum memiliki akun?</p>
+            <a href="/register"
+               class="py-2 px-6 rounded bg-gray-600 hover:bg-gray-700 text-white font-semibold transition">
+                Daftar Disini
+            </a>
+        </div>
+    </div>
+    <script>
+        function togglePassword() {
+            const password = document.getElementById('password');
+            password.type = password.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+</html>
