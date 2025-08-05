@@ -6,6 +6,8 @@ use App\Http\Controllers\User\PromoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminPromoController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\User\ArticleController as UserArticleController;
 
 // Halaman utama (welcome)
 Route::view('/', 'welcome')->name('home');
@@ -36,6 +38,21 @@ Route::prefix('admin')->group(function () {
 //});
     // Promo Admin
     Route::resource('promos', AdminPromoController::class);
+});
+
+// User
+// Route::get('/artikel', [UserArticleController::class, 'index'])->name('user.articles.index');
+    Route::get('/artikel', [UserArticleController::class, 'index'])->name('article.index');
+    Route::get('/artikel/{id}', [UserArticleController::class, 'show'])->name('article.show');
+
+// Admin (with middleware if needed)
+// Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+//     Route::resource('articles', AdminArticleController::class)->names('admin.articles');
+// });
+
+// Admin (tanpa middleware auth)
+Route::prefix('admin')->group(function () {
+    Route::resource('articles', AdminArticleController::class)->names('admin.articles');
 });
 
 // Auth bawaan Laravel Breeze, Jetstream, dll
