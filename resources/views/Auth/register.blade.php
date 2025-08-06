@@ -10,7 +10,7 @@
 
     <div class="flex min-h-screen">
         <!-- Left Panel -->
-        <div class="w-1/2 bg-gradient-to-br from-gray-100 to-gray-300 p-10 flex flex-col justify-center items-center">
+        <div class="w-1/2 bg-gradient-to-br from-gray-100 to-gray-300 p-1 flex flex-col justify-center items-center">
             <a href="/login" class="self-start text-gray-600 hover:text-gray-800 text-xl font-semibold">
                 ← samafitro
             </a>
@@ -93,9 +93,11 @@
                 </div>
 
                 <div class="text-center pt-6">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded">
-                        Daftar Sekarang
-                    </button>
+                    <a href="/login" class="self-start text-gray-600 hover:text-gray-800 text-xl font-semibold">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded">
+                            Daftar Sekarang
+                        </button>w
+                    </a>
                 </div>
             </form>
         </div>

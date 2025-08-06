@@ -55,7 +55,8 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user);
-
-        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil!');
+        $validated['password'] = bcrypt($validated['password']);
+        $user = User::create($validated);
+        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
     }
 }

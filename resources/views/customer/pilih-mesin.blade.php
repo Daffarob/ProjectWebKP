@@ -44,11 +44,17 @@
                 <ul id="carousel" class="flex transition-transform duration-500 ease-in-out">
                     @php
                         $machineTypes = [
+                            'Digital Labels & Packaging',
+                            'Digital Commercial Printing',
                             'Finishing Digital & Label Printing',
+                            '3D Printer',
                             'Garment Textile',
                             'Large Format Printing',
-                            'Office Solution',
-                            'Packaging & Label Converting',
+                            'UV Print & Finishing',
+                            'Office & Retail',
+                            'POS & PDT',
+                            'Sports & Wellnes',
+                            'Medical',
                         ];
                     @endphp
 
@@ -96,6 +102,5 @@
 
         updateCarousel();
     </script>
-
 </body>
 </html>
