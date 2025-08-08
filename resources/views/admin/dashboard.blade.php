@@ -31,16 +31,31 @@
 </head>
 <body class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen">
 
-    <!-- Header -->
-    <nav class="bg-gray-950 px-6 py-4 flex items-center justify-between shadow-lg">
+<!-- Navbar -->
+<nav class="bg-gray-950 px-6 py-4 shadow-lg">
+    <div class="flex items-center justify-between">
+        <!-- Logo -->
         <img src="{{ asset('images/logo-samafitro.png') }}" class="h-10" alt="Samafitro">
-        <ul class="flex gap-6 text-sm font-medium tracking-wide">
-            <li><a href="#" class="hover:text-blue-400 transition">Edit Home</a></li>
-            <li><a href="#" class="hover:text-blue-400 transition">Edit Katalog Produk</a></li>
-            <li><a href="#" class="hover:text-blue-400 transition">Edit Promo</a></li>
-            <li><a href="#" class="hover:text-blue-400 transition">Edit Artikel & News</a></li>
-        </ul>
-    </nav>
+
+        <!-- Menu + Icon -->
+        <div class="flex items-center gap-6">
+            <!-- Menu -->
+            <ul class="flex items-center space-x-6 text-sm">
+                <li><a href="{{ route('admin.dashboard') }}" class="hover:text-primary transition">Edit Home</a></li>
+                <li><a href="#" class="hover:text-primary transition">Edit Katalog Produk</a></li>
+                <li><a href="{{ route('admin.promos.index') }}" class="hover:text-primary transition">Edit Promo</a></li>
+                <li><a href="{{ route('admin.articles.index') }}" class="hover:text-primary transition">Edit Artikel & Berita</a></li>
+                <li><a href="#" class="hover:text-primary transition">Hubungi Kami</a></li>
+            </ul>
+
+            <!-- Icon -->
+            <div class="flex items-center gap-4">
+                <a href="#"><img src="/images/cart.png" alt="Cart" class="h-6 w-6"></a>
+                <a href="{{ route('User.profile.index') }}"><img src="/images/profile.png" alt="Profile" class="h-6 w-6"></a>
+            </div>
+        </div>
+    </div>
+</nav>
 
     <!-- Form Input -->
     <section class="max-w-6xl mx-auto px-4 py-10">

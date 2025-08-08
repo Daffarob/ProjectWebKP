@@ -60,11 +60,11 @@ class AdminPromoController extends Controller
 
         $promo->update($data);
 
-        return redirect()->route('promos.index')->with('success', 'Promo berhasil diperbarui');
+        return redirect()->route('admin.promos.index')->with('success', 'Promo berhasil diperbarui');
     }
 
     public function destroy(Promo $promo) {
         $promo->delete();
-        return redirect()->route('promos.index')->with('success', 'Promo berhasil dihapus');
+        return redirect()->route('admin.promos.index')->with('success', 'Promo berhasil dihapus');
     }
 }
