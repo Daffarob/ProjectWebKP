@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Kustomisasi scroll & overflow untuk kenyamanan mobile */
+body {
+  overscroll-behavior-y: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optional tambahan agar navbar selalu rapat di mobile */
+nav ul {
+  flex-wrap: wrap;
+}
