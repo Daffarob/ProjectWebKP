@@ -9,9 +9,11 @@ return new class extends Migration {
     {
         Schema::create('dashboard_items', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->text('deskripsi');
+            $table->string('judul')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->string('gambar')->nullable();
+            $table->string('type')->default('general');
+            $table->string('brand')->nullable()->after('judul');
             $table->timestamps();
         });
     }

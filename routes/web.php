@@ -37,7 +37,7 @@ Route::get('/artikel/{id}', [UserArticleController::class, 'show'])->name('artic
 Route::prefix('admin')->group(function () {
 
     // Dashboard Admin
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('Admin.dashboard');
     Route::post('/dashboard', [AdminDashboardController::class, 'store'])->name('admin.dashboard.store');
     Route::delete('/dashboard/{id}', [AdminDashboardController::class, 'destroy'])->name('admin.dashboard.destroy');
 

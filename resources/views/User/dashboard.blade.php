@@ -11,9 +11,8 @@
 </head>
 <body class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
     {{-- Navbar --}}
-    <nav class="bg-gray-950 shadow relative z-50">
+    <nav x-data="{ open: false }" class="bg-gray-950 shadow relative z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-
             {{-- Logo --}}
             <div class="flex items-center space-x-3">
                 <img src="{{ asset('images/logo-samafitro.png') }}" alt="Samafitro" class="h-12 md:h-16 w-auto max-h-14">
@@ -81,51 +80,75 @@
         </div>
     </section>
 
+    <script>
+        function carousel() {
+            return {
+                // gunakan data yang sudah disiapkan di controller
+                slides: @json($carousels ?? []),
+                activeIndex: 0,
+                start() {
+                    if (this.slides.length > 0) {
+                        this.activeIndex = 0;
+                        // interval otomatis, simpan id kalau ingin stop nanti
+                        this._interval = setInterval(() => this.next(), 4000);
+                    } else {
+                        this.activeIndex = -1;
+                    }
+                },
+                next() {
+                    if (this.slides.length === 0) return;
+                    this.activeIndex = (this.activeIndex + 1) % this.slides.length;
+                },
+                prev() {
+                    if (this.slides.length === 0) return;
+                    this.activeIndex = (this.activeIndex - 1 + this.slides.length) % this.slides.length;
+                }
+            }
+        }
+    </script>
+
     {{-- Section with text and images --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-        <div class="flex flex-col gap-4" x-data="{ show: false }" x-init="setTimeout(() => show = true, 300)">
-            <template x-if="show">
+        <div class="flex flex-col gap-4">
+            @foreach($gradient_cards->take(2) as $card)
                 <div class="rounded-2xl bg-gray-800 p-4 flex items-center justify-center shadow-lg">
-                    <img src="/images/ucjv330.png" alt="UCJV330" class="object-contain w-full h-[180px]">
+                    <img src="{{ asset('storage/' . $card->gambar) }}" alt="{{ $card->judul ?? 'Gradient Card' }}" class="object-contain w-full h-[180px]">
                 </div>
-            </template>
-            <template x-if="show">
-                <div class="rounded-2xl bg-gray-800 p-4 flex items-center justify-center shadow-lg">
-                    <img src="/images/lxir320.png" alt="LXiR320" class="object-contain w-full h-[180px]">
-                </div>
-            </template>
+            @endforeach
         </div>
         <div class="text-center">
             <h2 class="text-xl sm:text-2xl md:text-4xl font-bold">Kepercayaan Anda,<br> keahlian kami</h2>
             <p class="mt-3 text-gray-300 text-sm sm:text-base">Dengan mesin yang berperforma tinggi,<br> memberikan pengalaman terbaik kepada Anda</p>
         </div>
-        <div class="flex flex-col gap-4" x-data="{ show: false }" x-init="setTimeout(() => show = true, 300)">
-            <template x-if="show">
+        <div class="flex flex-col gap-4">
+            @foreach($gradient_cards->slice(2, 2) as $card)
                 <div class="rounded-2xl bg-gray-800 p-4 flex items-center justify-center shadow-lg">
-                    <img src="/images/tc20m.png" alt="TC-20M" class="object-contain w-full h-[180px]">
+                    <img src="{{ asset('storage/' . $card->gambar) }}" alt="{{ $card->judul ?? 'Gradient Card' }}" class="object-contain w-full h-[180px]">
                 </div>
-            </template>
-            <template x-if="show">
-                <div class="rounded-2xl bg-gray-800 p-4 flex items-center justify-center shadow-lg">
-                    <img src="/images/prestos.png" alt="Presto S" class="object-contain w-full h-[180px]">
-                </div>
-            </template>
+            @endforeach
         </div>
     </section>
 
     {{-- Items dari database --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($items as $item)
-                <div class="bg-gray-800 rounded-xl p-4 shadow hover:shadow-xl transition">
-                    <h3 class="text-lg font-semibold mb-2">{{ $item->judul }}</h3>
-                    <p class="text-gray-300 text-sm mb-3">{{ $item->deskripsi }}</p>
-                    @if ($item->gambar)
-                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="rounded-lg w-full object-cover max-h-52">
+            <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        @forelse($items as $item)
+            <div class="bg-white shadow rounded-xl overflow-hidden">
+                @if($item->gambar)
+                    <img src="{{ asset('storage/' . $item->gambar) }}" class="w-full h-48 object-cover" alt="{{ $item->judul }}">
+                @endif
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">{{ $item->judul }}</h2>
+                    @if($item->brand)
+                        <p class="text-sm text-gray-500">{{ $item->brand }}</p>
                     @endif
+                    <p class="text-gray-700 mt-2">{{ $item->deskripsi }}</p>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @empty
+            <p class="col-span-full text-center text-gray-500">Belum ada konten.</p>
+        @endforelse
+    </div>
     </section>
 
     {{-- Footer --}}
@@ -148,21 +171,5 @@
         </div>
     </footer>
 
-    <script>
-        function carousel() {
-            return {
-                activeIndex: 0,
-                slides: [
-                    { image: '/images/ucjv330.png', title: 'UCJV330 SERIE', brand: 'Mimaki', description: 'Inovasi cetak, kualitas profesional.' },
-                    { image: '/images/tc20m.png', title: 'Image PROGRAF TC-20M', brand: 'Canon', description: 'Desain ramping, performa maksimal.' },
-                    { image: '/images/lxir320.png', title: 'RollToRoll UV Printer LXiR320', brand: 'Jetrix', description: 'Warna lebih hidup, daya tahan lebih lama.' },
-                    { image: '/images/prestos.png', title: 'KORNIT Presto S', brand: 'Kornit', description: 'Solusi cetak, untuk kain berkualitas.' },
-                ],
-                start() { setInterval(() => this.next(), 4000); },
-                next() { this.activeIndex = (this.activeIndex + 1) % this.slides.length; },
-                prev() { this.activeIndex = (this.activeIndex - 1 + this.slides.length) % this.slides.length; }
-            };
-        }
-    </script>
 </body>
 </html>

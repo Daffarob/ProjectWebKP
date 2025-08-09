@@ -67,6 +67,9 @@
                 <label class="block mb-2 text-sm font-semibold text-gray-300">Judul</label>
                 <input type="text" name="judul" class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring focus:ring-blue-500" required>
 
+                <label class="block mt-4 mb-2 text-sm font-semibold text-gray-300">Brand</label>
+                <input type="text" name="brand" class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring focus:ring-blue-500">
+
                 <label class="block mt-4 mb-2 text-sm font-semibold text-gray-300">Deskripsi</label>
                 <textarea name="deskripsi" rows="4" class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring focus:ring-blue-500" required></textarea>
             </div>
@@ -81,15 +84,18 @@
         </form>
     </section>
 
-    <!-- Data Grid -->
-    <section class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        @foreach($items as $item)
+<!-- Data Grid -->
+<section class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    @forelse($items as $item)
         <div class="bg-gray-900 border border-gray-800 hover:shadow-xl transition rounded-xl overflow-hidden relative group">
             @if($item->gambar)
-            <img src="{{ asset('storage/' . $item->gambar) }}" class="w-full h-40 object-cover">
+                <img src="{{ asset('storage/' . $item->gambar) }}" class="w-full h-48 object-cover" alt="{{ $item->judul }}">
             @endif
             <div class="p-4">
-                <h2 class="text-xl font-semibold text-white mb-2">{{ $item->judul }}</h2>
+                <h2 class="text-xl font-bold text-white mb-1">{{ $item->judul }}</h2>
+                @if($item->brand)
+                    <p class="text-lg text-gray-300 font-semibold mb-2">{{ $item->brand }}</p>
+                @endif
                 <p class="text-gray-400 text-sm leading-relaxed">{{ $item->deskripsi }}</p>
             </div>
             <form action="{{ route('admin.dashboard.destroy', $item->id) }}" method="POST" class="absolute top-3 right-3">
@@ -100,8 +106,10 @@
                 </button>
             </form>
         </div>
-        @endforeach
-    </section>
+    @empty
+        <p class="text-gray-400 col-span-full text-center">Belum ada data konten dashboard.</p>
+    @endforelse
+</section>
 
     <!-- Footer -->
     <footer class="bg-gradient-to-b from-gray-900 to-gray-800 py-10 text-white text-sm">

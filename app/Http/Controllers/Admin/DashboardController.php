@@ -9,25 +9,23 @@ use App\Models\DashboardItem;
 
 class DashboardController extends Controller
 {
-    /**
-     * Menampilkan semua item dashboard.
-     */
     public function index()
     {
         $items = DashboardItem::latest()->get();
         return view('admin.dashboard', compact('items'));
     }
 
-    /**
-     * Menyimpan item baru ke dashboard.
-     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+        // Validasi
+        $request->validate([
+            'judul' => 'nullable|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'brand' => 'nullable|string|max:255',
             'gambar' => 'nullable|image|max:2048',
         ]);
+
+        $data = $request->only(['judul', 'deskripsi', 'brand']);
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('dashboard', 'public');
@@ -35,12 +33,10 @@ class DashboardController extends Controller
 
         DashboardItem::create($data);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil ditambahkan.');
+        // Setelah simpan → redirect ke dashboard user
+        return redirect()->route('dashboard')->with('success', 'Item berhasil ditambahkan.');
     }
 
-    /**
-     * Menghapus item dari dashboard berdasarkan ID.
-     */
     public function destroy($id)
     {
         $item = DashboardItem::findOrFail($id);
