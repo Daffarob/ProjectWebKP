@@ -19,19 +19,19 @@ class AdminPromoController extends Controller
     public function store(Request $request)
 {
     $validated = $request->validate([
-        'title' => 'required|string',
-        'vendor' => 'required|string',
-        'label' => 'nullable|string',
-        'periode' => 'required|date',
-        'discount' => 'nullable|string',
-        'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    ]);
+    'name' => 'required|string',
+    'vendor' => 'required|string',
+    'label' => 'nullable|string',
+    'periode' => 'required|date',
+    'discount' => 'nullable|string',
+    'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+]);
 
     // Simpan gambar ke folder public/images
     if ($request->hasFile('image')) {
         $image = $request->file('image');
         $filename = time() . '_' . $image->getClientOriginalName();
-        $image->move(public_path('images'), $filename);
+        $path = $request->file('image')->store('promo_images', 'public');
         $validated['image'] = $filename;
     }
 
@@ -46,7 +46,7 @@ class AdminPromoController extends Controller
 
     public function update(Request $request, Promo $promo) {
         $data = $request->validate([
-            'title' => 'required',
+            'name' => 'required',
             'vendor' => 'required',
             'label' => 'required',
             'discount' => 'required',

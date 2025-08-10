@@ -56,14 +56,14 @@
         <div class="form-section mx-auto" style="max-width: 700px;">
             <h4 class="mb-4">{{ isset($promo) ? 'Edit Promo' : 'Tambah Promo Baru' }}</h4>
 
-            <form action="{{ isset($promo) ? route('promos.update', $promo->id) : route('promos.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ isset($promo) ? route('admin.promos.update', $promo->id) : route('admin.promos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @if(isset($promo)) @method('PUT') @endif
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="title" class="form-label">Judul Promo</label>
-                        <input type="text" name="title" class="form-control" value="{{ $promo->title ?? old('title') }}" required>
+                        <label for="name" class="form-label">Judul Promo</label>
+                        <input type="text" name="name" class="form-control" value="{{ $promo->name?? old('name') }}" required>
                     </div>
                     <div class="col-md-6">
                         <label for="vendor" class="form-label">Vendor</label>

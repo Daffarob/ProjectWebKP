@@ -124,7 +124,7 @@
                         <tbody>
                             @forelse($promos as $promo)
                                 <tr>
-                                    <td>{{ $promo->title }}</td>
+                                    <td>{{ $promo->name }}</td>
                                     <td>{{ $promo->vendor }}</td>
                                     <td><span class="badge badge-custom">{{ $promo->label }}</span></td>
                                     <td class="text-danger fw-semibold">{{ $promo->discount }}</td>
