@@ -42,7 +42,7 @@ header {
 }
 
 /* Desktop nav */
-@media (min-width: 1025px) {
+@media screen and (min-width: 1025px) {
   .nav-wrapper {
     display: flex !important;
     position: static !important;
@@ -82,7 +82,7 @@ header {
 }
 
 /* Mobile nav */
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   header {
     flex-direction: column;
     align-items: flex-start;
@@ -183,7 +183,7 @@ header {
 }
 
 /* Responsif: Search di mobile */
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .search-container {
     padding: 10 20px;
     margin: 10px 0;
@@ -264,11 +264,15 @@ header {
 }
 
 /* Responsif Grid */
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .katalog-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
     max-width: 98vw;
+  }
+  .produk-tab-content {
+    padding: 18px 0 24px 0;
+    min-height: 300px;
   }
   .katalog-card img {
     width: 90px;
@@ -276,9 +280,9 @@ header {
   }
 }
 
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .produk-tab-content {
-  padding: 18px 6vw 24px 6vw;
+  padding: 18px 0 24px 0;
   min-height: 300px;
 }
 
@@ -408,10 +412,12 @@ header {
 }
 
 /* Mobile: Tab jadi horizontal scroll */
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .produk-tab-grid {
     grid-template-columns: 1fr;
     border-radius: 12px;
+    max-width: screen;
+    box-sizing: border-box;
   }
   .produk-tab-sidebar {
     flex-direction: row;
@@ -434,14 +440,22 @@ header {
     text-align: center;
     min-width: 120px;
   }
+  .produk-tab-mobile-dropdown {
+    display: none;
+    width: 100vw;
+    overflow: hidden; /* cegah elemen melebar keluar */
+    border-radius: 12px 12px 0 0;
+    box-sizing: border-box;
+  }
   .produk-tab-item.active, .produk-tab-item:hover {
     background: #fff;
     color: #222;
     border-top: 4px solid #222;
   }
   .produk-tab-content {
-    padding: 18px 6vw 24px 6vw;
+    padding: 18px 0vw 24px 0vw;
     min-height: 300px;
+    max-width: fit-content;
   }
 }
 
@@ -539,7 +553,7 @@ select:focus {
 
 
 
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .produk-tab-mobile-dropdown {
     display: block !important;
   }
@@ -601,7 +615,7 @@ select:focus {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .brochure-buttons {
     padding: 6px;
   }
