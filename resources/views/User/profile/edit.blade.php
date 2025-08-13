@@ -118,13 +118,13 @@
 
             <div class="text-center mb-4">
                 @if($profile->photo)
-                    <img src="{{ asset('images/' . $profile->photo) }}" class="profile-pic mb-2">
+                    <img id="profile-preview" src="{{ asset('images/' . $profile->photo) }}" class="profile-pic mb-2">
                 @else
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-pic mb-2">
+                    <img id="profile-preview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-pic mb-2">
                 @endif
                 <div>
                     <label class="btn btn-outline-info btn-sm btn-upload">
-                        Ganti Foto <input type="file" name="photo" hidden>
+                        Ganti Foto <input type="file" name="photo" id="photo-input" hidden>
                     </label>
                 </div>
             </div>
@@ -159,5 +159,18 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('photo-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>

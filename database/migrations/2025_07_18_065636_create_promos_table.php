@@ -14,12 +14,11 @@ return new class extends Migration
     Schema::create('promos', function (Blueprint $table) {
        $table->id();
             $table->string('name');
-            $table->string('promo_type');
-            $table->integer('discount_percentage');
-            $table->string('category');
-            $table->date('period_start');
-            $table->date('period_end');
-            $table->string('image_url');
+            $table->string('vendor');
+            $table->string('label');
+            $table->integer('discount');
+            $table->string('image');
+            $table->string('periode');
             $table->timestamps();
         });
 }
