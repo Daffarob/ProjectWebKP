@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 class Promo extends Model
 {
     protected $fillable = [
-        'title', 'vendor', 'label', 'discount', 'periode', 'image'
+        'name', 'vendor', 'label', 'discount', 'periode', 'image','terms'
     ];
 }
