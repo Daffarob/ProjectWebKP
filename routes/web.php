@@ -25,6 +25,7 @@ Route::put('/profile/update', [ProfileController::class, 'update'])->name('User.
 
 // Halaman promo untuk user
 Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
+Route::get('/promo/{promo}', [PromoController::class, 'show'])->name('promo.show');
 
 // Artikel user
 Route::get('/artikel', [UserArticleController::class, 'index'])->name('article.index');

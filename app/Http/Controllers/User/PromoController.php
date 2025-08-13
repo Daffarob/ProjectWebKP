@@ -14,4 +14,9 @@ class PromoController extends Controller
 
         return view('user.promo.index', compact('promos'));
     }
+    public function show(Promo $promo)
+    {
+        // $promo adalah model yang di-binding otomatis (id)
+        return view('User.promo.show', compact('promo'));
+    }
 }

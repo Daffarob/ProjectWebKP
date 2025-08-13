@@ -99,6 +99,27 @@
                 padding: 9px 20px;
             }
         }
+        .floating-wa { 
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .floating-wa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .floating-wa:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(0, 255, 0, 0.5);
+        }
     </style>
 </head>
 <body>
