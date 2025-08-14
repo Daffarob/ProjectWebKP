@@ -14,7 +14,7 @@ class ProfileController extends Controller
 
         // Cek apakah data profil ada
         if (!$profile) {
-            return redirect()->route('profile.edit')->with('warning', 'Silakan lengkapi profil Anda terlebih dahulu.');
+            return redirect()->route('User.profile.edit')->with('warning', 'Silakan lengkapi profil Anda terlebih dahulu.');
         }
 
         return view('User.profile.index', compact('profile'));
@@ -22,22 +22,22 @@ class ProfileController extends Controller
 
     // Tampilkan form edit profil
     public function edit()
-{
-    $profile = Profile::first();
+    {
+        $profile = Profile::first();
 
-    if (!$profile) {
-        $profile = Profile::create([
-            'name' => '',
-            'email' => '',
-            'phone' => '',
-            'address' => '',
-            'photo' => '',
-            'password' => bcrypt('defaultpassword'), // ← Tambahkan ini
-        ]);
+        if (!$profile) {
+            $profile = Profile::create([
+                'name' => '',
+                'email' => '',
+                'phone' => '',
+                'address' => '',
+                'photo' => '',
+                'password' => bcrypt('defaultpassword'), // ← Tambahkan ini
+            ]);
+        }
+
+        return view('User.profile.edit', compact('profile'));
     }
-
-    return view('User.profile.edit', compact('profile'));
-}
 
     // Simpan hasil update profil
     public function update(Request $request)

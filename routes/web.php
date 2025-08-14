@@ -11,8 +11,9 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\User\ArticleController as UserArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
-
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CartController;
 
 // Tampilkan form login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -27,8 +28,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/password/reset', function () {
     return view('auth.forgot-password');
 })->name('password.request');
-
-use App\Http\Controllers\RegisterController;
 
 // Tampilkan form daftar
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -79,6 +78,13 @@ Route::get('/produk/json', function () {
         'products' => $products
     ]);
 });
+
+// Route untuk Keranjang
+Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
+Route::post('/keranjang/tambah', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/{cart}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+
 
 // Halaman admin
 Route::get('/produksales/admin', function () {
@@ -180,9 +186,6 @@ Route::delete('/admin/produk/delete/{id}', function ($id) {
 // ========================
 // 💡 DEFAULT & USER SECTION
 // ========================
-
-// Halaman utama (welcome)
-Route::view('/', 'welcome')->name('home');
 
 // Dashboard & profile (sementara tanpa auth)
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Samafiltro</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex items-center justify-center bg-gray-200 p-4">
     <div class="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <!-- Flex container: stack on small screens, row on medium+ -->
@@ -26,7 +28,7 @@
                                 class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required autofocus>
                             @error('email')
-                                <span class="text-red-400 text-sm">{{ $message }}</span>
+                            <span class="text-red-400 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-6 relative">
@@ -56,7 +58,7 @@
                 <h2 class="text-gray-700 text-2xl font-bold mb-4">Selamat Datang !</h2>
                 <p class="text-gray-600 mb-8">Anda belum memiliki akun?</p>
                 <a href="/register"
-                   class="inline-block py-2 px-6 rounded bg-gray-600 hover:bg-gray-700 text-white font-semibold transition duration-200">
+                    class="inline-block py-2 px-6 rounded bg-gray-600 hover:bg-gray-700 text-white font-semibold transition duration-200">
                     Daftar Disini
                 </a>
             </div>
@@ -70,4 +72,5 @@
         }
     </script>
 </body>
+
 </html>

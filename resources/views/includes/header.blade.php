@@ -1,4 +1,3 @@
-
 <!-- Header Partial -->
 <style>
   .header-flex {
@@ -16,18 +15,21 @@
     border-bottom: 1px solid #333;
     box-sizing: border-box;
   }
+
   .header-group-left {
     display: flex;
     align-items: center;
     gap: 32px;
     min-width: 0;
   }
+
   .logo {
     max-height: 48px;
     margin-right: 16px;
     margin-left: 0;
     flex-shrink: 0;
   }
+
   .nav-list-desktop ul {
     display: flex;
     gap: 24px;
@@ -36,6 +38,7 @@
     margin: 0;
     padding: 0;
   }
+
   .nav-list-desktop a {
     color: #fff;
     text-decoration: none;
@@ -47,6 +50,7 @@
     border-bottom: none;
 
   }
+
   .nav-list-desktop a.active-nav {
     color: #7d7d7dff;
     font-weight: 700;
@@ -54,20 +58,24 @@
     border-radius: 0;
 
   }
+
   .nav-list-desktop a:hover {
     color: #ffffffff;
   }
+
   .header-group-right {
     display: flex;
     gap: 16px;
     align-items: center;
     margin-left: 24px;
   }
+
   @media (max-width: 1024px) {
     .header-group-right {
       display: none;
     }
   }
+
   .btn-nav {
     background: #222;
     color: #fff;
@@ -78,10 +86,12 @@
     font-size: 0.78rem;
     transition: background 0.2s;
   }
+
   .btn-nav:hover {
     background: #b4c6ccff;
     color: #111;
   }
+
   .hamburger {
     display: none;
     flex-direction: column;
@@ -95,6 +105,7 @@
     z-index: 20;
     padding: 0;
   }
+
   .hamburger span {
     display: block;
     width: 24px;
@@ -102,7 +113,7 @@
     margin: 4px 0;
     background: #fff;
     border-radius: 2px;
-    transition: 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+    transition: 0.35s cubic-bezier(.68, -0.55, .27, 1.55);
   }
 
 
@@ -111,20 +122,24 @@
       padding: 0 12px;
       height: 60px;
     }
+
     .nav-list-desktop {
       display: none;
     }
+
     .hamburger {
       display: flex;
       width: 20px;
       height: 40px;
     }
+
     .hamburger span {
       width: 28px;
       height: 4px;
       margin: 5px 0;
     }
   }
+
   /* Mobile nav styles */
   .nav-wrapper {
     display: none;
@@ -136,19 +151,24 @@
     flex-direction: column;
     padding: 24px 0 12px 0;
     z-index: 9;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     border-radius: 0;
   }
+
   .nav-wrapper.is-open {
     display: flex;
   }
-  .nav-left, .nav-right {
+
+  .nav-left,
+  .nav-right {
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 0 32px;
   }
-  .nav-left a, .nav-right a {
+
+  .nav-left a,
+  .nav-right a {
     color: #fff;
     text-decoration: none;
     font-weight: 500;
@@ -158,46 +178,58 @@
 
     transition: color 0.2s;
   }
-  .nav-left a.active-nav, .nav-right a.active-nav {
+
+  .nav-left a.active-nav,
+  .nav-right a.active-nav {
     color: #6a6a6aff;
     font-weight: 700;
 
     border-radius: 0;
     text-underline-offset: 2px;
   }
-  .nav-left a:hover, .nav-right a:hover {
+
+  .nav-left a:hover,
+  .nav-right a:hover {
     color: #ffffffff;
   }
+
   @media (max-width: 1024px) {
     .nav-wrapper {
       top: 60px;
       padding: 8px 0 4px 0;
     }
-    .nav-left, .nav-right {
+
+    .nav-left,
+    .nav-right {
       padding: 0 8px;
       font-size: 0.78rem;
     }
   }
+
   @media (max-width: 600px) {
     .header-flex {
       padding: 0 4px;
       height: 52px;
     }
+
     .logo {
 
       margin-right: 8px;
     }
+
     .hamburger {
       width: 44px;
       height: 44px;
       padding: 0;
     }
+
     .hamburger span {
       width: 20px;
       height: 3px;
       margin: 3px 0;
       margin-left: -2px;
     }
+
     .nav-wrapper {
       top: 52px;
       padding: 4px 0 2px 0;
@@ -206,17 +238,21 @@
       width: 100vw;
       left: 0;
       background: #222;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
       border-radius: 0;
       max-height: 60vh;
       overflow-y: auto;
     }
-    .nav-left, .nav-right {
+
+    .nav-left,
+    .nav-right {
       padding: 0 4px;
       gap: 8px;
     }
-    .nav-left a, .nav-right a {
-    font-size: 0.82rem;
+
+    .nav-left a,
+    .nav-right a {
+      font-size: 0.82rem;
     }
   }
 </style>
@@ -255,7 +291,7 @@
       <a href="{{ url('/hubungi-kami') }}" class="{{ Request::is('hubungi-kami') ? 'active-nav' : '' }}">Hubungi Kami</a>
       <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
       <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
-    </nav> 
+    </nav>
   </div>
 </header>
 <script>

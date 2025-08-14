@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun | Samafitro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-     <style>
+    <style>
         /* Gaya umum untuk dropdown */
         select {
             -webkit-appearance: none;
@@ -14,7 +15,8 @@
 
             font-size: 14px;
             line-height: 1.5;
-            padding: 8px 32px 8px 8px; /* Padding untuk teks dan panah */
+            padding: 8px 32px 8px 8px;
+            /* Padding untuk teks dan panah */
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -33,40 +35,50 @@
             padding: 8px;
             background-color: #fff;
             color: #333;
-            border-bottom: 1px solid #eee; /* Garis pemisah antar opsi */
+            border-bottom: 1px solid #eee;
+            /* Garis pemisah antar opsi */
 
             /* Gaya ketika opsi dipilih */
             &:hover,
             &:focus {
-                background-color: #e0f7fa; /* Warna latar belakang saat hover/focus */
+                background-color: #e0f7fa;
+                /* Warna latar belakang saat hover/focus */
             }
         }
 
         /* Scrollbar Horizontal (opsional) */
         select::-webkit-scrollbar {
-            width: 6px; /* Lebar scrollbar */
+            width: 6px;
+            /* Lebar scrollbar */
         }
+
         select::-webkit-scrollbar-thumb {
-            background-color: #aaa; /* Warna thumb scrollbar */
+            background-color: #aaa;
+            /* Warna thumb scrollbar */
             border-radius: 4px;
         }
+
         select::-webkit-scrollbar-track {
-            background-color: #f1f1f1; /* Warna track scrollbar */
+            background-color: #f1f1f1;
+            /* Warna track scrollbar */
         }
 
         /* Panah kustom */
         .dropdown-arrow {
-            pointer-events: none; /* Hindari interaksi dengan panah */
-            transform: rotate(90deg); /* Rotasi panah */
+            pointer-events: none;
+            /* Hindari interaksi dengan panah */
+            transform: rotate(90deg);
+            /* Rotasi panah */
         }
     </style>
 
 </head>
+
 <body class="bg-gray-100 min-h-screen">
 
     <!-- Flex layout: stack on small screens, row on large screens -->
     <div class="flex flex-col lg:flex-row min-h-screen">
-        
+
         <!-- Left Panel (Informasi) - Hanya tampil di layar besar -->
         <div class="lg:w-1/2 bg-gradient-to-br from-gray-100 to-gray-300 p-6 lg:p-10 flex flex-col justify-center items-center text-center hidden lg:block">
             <a href="{{ route('login') }}" class="self-start text-gray-600 hover:text-gray-800 text-xl font-semibold mb-8">
@@ -87,14 +99,14 @@
 
             <!-- Tampilkan Error -->
             @if ($errors->any())
-                <div class="bg-red-900 border border-red-600 text-red-200 p-4 rounded mb-6">
-                    <strong class="font-medium">Terjadi kesalahan:</strong>
-                    <ul class="list-disc pl-5 mt-2">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="bg-red-900 border border-red-600 text-red-200 p-4 rounded mb-6">
+                <strong class="font-medium">Terjadi kesalahan:</strong>
+                <ul class="list-disc pl-5 mt-2">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
 
             <!-- Form -->
@@ -140,68 +152,66 @@
 
                     <!-- Profil Organisasi -->
                     <div>
-    <label class="block mb-1 text-sm font-medium">
-        Nama Perusahaan 
-        <span class="text-gray-400 text-xs font-normal">(opsional)</span>
-    </label>
-    <input 
-        type="text" 
-        name="company_name" 
-        value="{{ old('company_name') }}" 
-        class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
-        placeholder="Misalnya: PT Samafiltro Indonesia"
-    >
-</div>
-                        <label class="block mb-1 text-sm font-medium">NPWP</label>
-                        <input type="text" name="npwp" value="{{ old('npwp') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="block mb-1 text-sm font-medium">
+                            Nama Perusahaan
+                            <span class="text-gray-400 text-xs font-normal">(opsional)</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="company_name"
+                            value="{{ old('company_name') }}"
+                            class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Misalnya: PT Samafiltro Indonesia">
                     </div>
+                    <label class="block mb-1 text-sm font-medium">NPWP</label>
+                    <input type="text" name="npwp" value="{{ old('npwp') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                    <!-- Keamanan -->
-                   <!-- Keamanan -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Pertanyaan Keamanan - Dropdown lebih kecil di mobile -->
-<body class="bg-gray-100">
+                <!-- Keamanan -->
+                <!-- Keamanan -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Pertanyaan Keamanan - Dropdown lebih kecil di mobile -->
 
-    <!-- Pertanyaan Keamanan -->
-<div class="md:col-span-2">
-    <label class="block mb-1 text-sm font-medium">Pertanyaan Keamanan</label>
-    <div class="relative max-w-xs w-full">
-        <!-- Select Dropdown -->
-        <select
-            name="security_question"
-            class="w-full p-2 bg-white border border-blue-500 rounded text-sm text-gray-700
+                    <body class="bg-gray-100">
+
+                        <!-- Pertanyaan Keamanan -->
+                        <div class="md:col-span-2">
+                            <label class="block mb-1 text-sm font-medium">Pertanyaan Keamanan</label>
+                            <div class="relative max-w-xs w-full">
+                                <!-- Select Dropdown -->
+                                <select
+                                    name="security_question"
+                                    class="w-full p-2 bg-white border border-blue-500 rounded text-sm text-gray-700
                    focus:outline-none focus:ring-2 focus:ring-blue-200
                    appearance-none h-10 leading-tight
                    transition ease-in-out duration-200
                    focus:border-blue-500"
-            required
-        >
-            <option value="" disabled selected>Pilih pertanyaan</option>
-            <option value="ibu_kandung">Siapa nama ibu kandung Anda?</option>
-            <option value="sekolah_pertama">Apa nama sekolah pertama Anda?</option>
-            <option value="makanan_favorit">Apa makanan favorit Anda?</option>
-        </select>
+                                    required>
+                                    <option value="" disabled selected>Pilih pertanyaan</option>
+                                    <option value="ibu_kandung">Siapa nama ibu kandung Anda?</option>
+                                    <option value="sekolah_pertama">Apa nama sekolah pertama Anda?</option>
+                                    <option value="makanan_favorit">Apa makanan favorit Anda?</option>
+                                </select>
 
-        <!-- Panah Kustom (Ganti Panah Default) -->
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-blue-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-        </div>
-    </div>
-</div>
-    <!-- Jawaban Keamanan -->
-    <div>
-        <label class="block mb-1 text-sm font-medium">Jawaban Keamanan</label>
-        <input 
-            type="text" 
-            name="security_answer" 
-            value="{{ old('security_answer') }}" 
-            class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
-            required
-        >
-    </div>
-</div>
+                                <!-- Panah Kustom (Ganti Panah Default) -->
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-blue-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jawaban Keamanan -->
+                        <div>
+                            <label class="block mb-1 text-sm font-medium">Jawaban Keamanan</label>
+                            <input
+                                type="text"
+                                name="security_answer"
+                                value="{{ old('security_answer') }}"
+                                class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                required>
+                        </div>
+                </div>
 
                 <!-- Tombol Submit -->
                 <div class="text-center pt-6">
@@ -222,4 +232,5 @@
     </div>
 
 </body>
+
 </html>
