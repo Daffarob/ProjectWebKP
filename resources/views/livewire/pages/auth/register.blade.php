@@ -22,7 +22,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -36,53 +36,156 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <form wire:submit="register">
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+<div class="flex flex-col lg:flex-row min-h-screen">
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
+    <!-- Left Panel (Informasi) - Hanya tampil di layar besar -->
+    <div class="lg:w-1/2 bg-gradient-to-br from-gray-100 to-gray-300 p-6 lg:p-10 flex flex-col justify-center items-center text-center hidden lg:block">
+        <a href="{{ route('login') }}" class="self-start text-gray-600 hover:text-gray-800 text-xl font-semibold mb-8">
+            ← samafitro
+        </a>
+        <div class="mt-10 max-w-md">
+            <h2 class="text-4xl font-bold mb-4">Hi!</h2>
+            <p class="text-gray-600 mb-6">Anda sudah memiliki akun?</p>
+            <a href="{{ route('login') }}" class="inline-block bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition">
+                Masuk Disini
             </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
         </div>
-    </form>
+    </div>
+
+    <!-- Right Panel (Form Daftar) -->
+    <div class="w-full lg:w-1/2 bg-gray-900 text-white p-6 lg:p-10 overflow-y-auto">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-8 text-center">Daftar Akun</h2>
+
+        <!-- Tampilkan Error -->
+        @if ($errors->any())
+        <div class="bg-red-900 border border-red-600 text-red-200 p-4 rounded mb-6">
+            <strong class="font-medium">Terjadi kesalahan:</strong>
+            <ul class="list-disc pl-5 mt-2">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <!-- Form -->
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Data Pribadi -->
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Nama Lengkap</label>
+                    <input type="text" name="name" value="{{ old('name') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Alamat Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Nomor Telepon</label>
+                    <input type="text" name="phone" value="{{ old('phone') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Alamat</label>
+                    <input type="text" name="address" value="{{ old('address') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Kata Sandi</label>
+                    <input type="password" name="password" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Konfirmasi Kata Sandi</label>
+                    <input type="password" name="password_confirmation" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+
+                <!-- Data KTP -->
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Nomor KTP</label>
+                    <input type="text" name="ktp_number" value="{{ old('ktp_number') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Unggah Foto KTP</label>
+                    <input type="file" name="ktp_photo" class="w-full p-2 bg-gray-800 rounded border border-gray-600 text-sm" accept=".jpg,.jpeg,.png" required>
+                </div>
+
+                <!-- Profil Organisasi -->
+                <div>
+                    <label class="block mb-1 text-sm font-medium">
+                        Nama Perusahaan
+                        <span class="text-gray-400 text-xs font-normal">(opsional)</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="company_name"
+                        value="{{ old('company_name') }}"
+                        class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Misalnya: PT Samafiltro Indonesia">
+                </div>
+                <label class="block mb-1 text-sm font-medium">NPWP</label>
+                <input type="text" name="npwp" value="{{ old('npwp') }}" class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <!-- Keamanan -->
+            <!-- Keamanan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Pertanyaan Keamanan - Dropdown lebih kecil di mobile -->
+
+                <body class="bg-gray-100">
+
+                    <!-- Pertanyaan Keamanan -->
+                    <div class="md:col-span-2">
+                        <label class="block mb-1 text-sm font-medium">Pertanyaan Keamanan</label>
+                        <div class="relative max-w-xs w-full">
+                            <!-- Select Dropdown -->
+                            <select
+                                name="security_question"
+                                class="w-full p-2 bg-white border border-blue-500 rounded text-sm text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-blue-200
+                   appearance-none h-10 leading-tight
+                   transition ease-in-out duration-200
+                   focus:border-blue-500"
+                                required>
+                                <option value="" disabled selected>Pilih pertanyaan</option>
+                                <option value="ibu_kandung">Siapa nama ibu kandung Anda?</option>
+                                <option value="sekolah_pertama">Apa nama sekolah pertama Anda?</option>
+                                <option value="makanan_favorit">Apa makanan favorit Anda?</option>
+                            </select>
+
+                            <!-- Panah Kustom (Ganti Panah Default) -->
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Jawaban Keamanan -->
+                    <div>
+                        <label class="block mb-1 text-sm font-medium">Jawaban Keamanan</label>
+                        <input
+                            type="text"
+                            name="security_answer"
+                            value="{{ old('security_answer') }}"
+                            class="w-full p-2 bg-gray-800 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                            required>
+                    </div>
+            </div>
+
+            <!-- Tombol Submit -->
+            <div class="text-center pt-6">
+                <button type="submit" class="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-2 rounded font-medium transition">
+                    Daftar Sekarang
+                </button>
+
+                <!-- Link "Sudah punya akun?" - Hanya muncul di perangkat kecil -->
+                <p class="mt-4 text-sm text-gray-300 lg:hidden">
+                    Sudah punya akun?
+                    <a href="{{ route('login') }}" class="text-white hover:underline font-medium">
+                        Masuk disini
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
 </div>
