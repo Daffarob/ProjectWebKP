@@ -16,10 +16,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CartController;
 
 // Tampilkan form login
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Proses login
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('loginAccount');
 
 // Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -227,9 +228,3 @@ Route::prefix('admin')->group(function () {
     // Halaman statis: Hubungi Kami
     Route::view('/contact', 'admin.contact')->name('admin.contact');
 });
-
-
-// ========================
-// 🔐 AUTH (Laravel Breeze/Jetstream/etc.)
-// ========================
-require __DIR__ . '/auth.php';
