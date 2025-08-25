@@ -1,5 +1,45 @@
 <!-- Header Partial -->
 <style>
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    color: white;
+  }
+
+  .dropdown-btn {
+    background-color: transparent;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #090909;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-menu a {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-menu a:hover {
+    background-color: #010101;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
   .header-flex {
     display: flex;
     align-items: center;
@@ -272,16 +312,36 @@
       </nav>
     </div>
     <div class="header-group-right">
+      {{-- Bagian ini akan tampil jika pengguna BELUM login --}}
+      @guest
       <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
       <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @endguest
+
+      {{-- Bagian ini akan tampil jika pengguna SUDAH login --}}
+      @auth
+      <div class="dropdown">
+        <button class="dropdown-btn" type="button">
+          {{ Auth::user()->name }}
+        </button>
+        <div class="dropdown-menu">
+          <a href="{{ route('User.profile.edit') }}">Edit Profil</a>
+          <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
+        </div>
+      </div>
+      @endauth
     </div>
+
     <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-wrapper" id="hamburger-btn" type="button">
       <span></span>
       <span></span>
       <span></span>
     </button>
   </div>
-  <!-- mobile nav -->
+
   <div class="nav-wrapper" id="nav-wrapper">
     <nav class="nav-left">
       <a href="{{ url('/') }}" class="{{ (Request::is('/') || Request::is('') || Request::is('beranda') || Request::routeIs('home')) ? 'active-nav' : '' }}">Beranda</a>
@@ -289,8 +349,19 @@
       <a href="{{ url('/produk') }}" class="{{ Request::is('produk') ? 'active-nav' : '' }}">Produk</a>
       <a href="{{ url('/kantor-cabang') }}" class="{{ Request::is('kantor-cabang') ? 'active-nav' : '' }}">Kantor Cabang</a>
       <a href="{{ url('/hubungi-kami') }}" class="{{ Request::is('hubungi-kami') ? 'active-nav' : '' }}">Hubungi Kami</a>
+
+      {{-- Login/Logout untuk Mobile --}}
+      @guest
       <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
       <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @endguest
+      @auth
+      <a href="{{ route('User.profile.edit') }}">Edit Profil</a>
+      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">Keluar</a>
+      <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+      @endauth
     </nav>
   </div>
 </header>

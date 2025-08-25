@@ -20,7 +20,7 @@
                 <div class="text-white mt-8">
                     <h2 class="text-2xl md:text-3xl font-bold mb-3">Masuk Ke Akun Anda</h2>
                     <p class="text-gray-300 mb-8">Silahkan masukkan email dan kata sandi yang sudah terdaftar</p>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="/login">
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-200 mb-2" for="email">Alamat Email</label>

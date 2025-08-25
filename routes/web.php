@@ -20,7 +20,7 @@ use App\Http\Controllers\CartController;
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Proses login
-Route::post('/login', [LoginController::class, 'login'])->name('loginAccount');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 // Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -88,7 +88,7 @@ Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update
 
 
 // Halaman admin
-Route::get('/produksales/admin', function () {
+Route::get('/admin/produk', function () {
     $categories = Category::all();
     $products = Product::with('category')->get();
     return view('admin.produk', compact('categories', 'products'));

@@ -48,7 +48,7 @@
             <!-- Desktop Menu -->
             <ul class="hidden md:flex space-x-6 text-sm font-medium">
                 <li><a href="{{ route('admin.dashboard') }}" class="hover:text-indigo-400 transition">Edit Beranda</a></li>
-                <li><a href="#" class="hover:text-indigo-400 transition">Edit Produk</a></li>
+                <li><a href="{{ route('admin.produk') }}" class="hover:text-indigo-400 transition">Edit Produk</a></li>
                 <li><a href="{{ route('admin.promos.index') }}" class="hover:text-indigo-400 transition">Edit Promo</a></li>
                 <li><a href="{{ route('admin.articles.index') }}" class="hover:text-indigo-400 transition">Edit Artikel & Berita</a></li>
                 <li><a href="#" class="hover:text-indigo-400 transition">Hubungi Kami</a></li>

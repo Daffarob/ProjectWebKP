@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/'); // Redirect ke halaman utama
+            return redirect()->intended('/promo'); // Redirect ke halaman utama
         }
 
         return back()->withErrors([
