@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\User\ArticleController as UserArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\LoginController;
 
@@ -110,6 +111,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/produk-user', function () {
         return view('pages.loggedin.produk');
     })->name('produk.user');
+
+    // Cart routes
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/cart/update', [CartController::class, 'updateQuantity'])->name('cart.update');
+    Route::get('/cart', [CartController::class, 'getCart'])->name('cart.get');
+    Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 });
 
 
