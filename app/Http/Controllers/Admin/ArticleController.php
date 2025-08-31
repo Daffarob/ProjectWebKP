@@ -10,12 +10,12 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::latest()->get();
-        return view('admin.article.index', compact('articles'));
+        return view('pages.admin.article.index', compact('articles'));
     }
 
     public function create()
     {
-        return view('admin.article.create');
+        return view('pages.admin.article.create');
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class ArticleController extends Controller
 
     public function edit(Article $article)
     {
-        return view('admin.article.edit', compact('article'));
+        return view('pages.admin.article.edit', compact('article'));
     }
 
     public function update(Request $request, Article $article)

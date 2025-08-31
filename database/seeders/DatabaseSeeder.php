@@ -16,14 +16,23 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-            'phone' => '08123456789',
-            'ktp_number' => '1234567890123456',
-            'security_question' => 'What is your favorite color?',
-            'security_answer' => Hash::make('blue'),
+        // Create admin user if it doesn't exist
+        User::firstOrCreate(
+            ['email' => 'admin@samafitro.com'],
+            [
+                'name' => 'Admin User',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'phone' => '08123456788',
+                'ktp_number' => '1234567890123455',
+                'security_question' => 'What is your favorite color?',
+                'security_answer' => Hash::make('admin'),
+            ]
+        );
+
+        // Seed categories
+        $this->call([
+            CategorySeeder::class,
         ]);
     }
 }

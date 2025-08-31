@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function index()
     {
         $items = DashboardItem::latest()->get(); // Ambil data dari DB
-        return view('dashboard', compact('items'));
+        return view('pages.loggedin.dashboard', compact('items'));
     }
 }
 

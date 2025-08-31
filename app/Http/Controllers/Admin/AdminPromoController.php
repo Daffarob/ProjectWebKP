@@ -13,11 +13,11 @@ class AdminPromoController extends Controller
 {
     public function index() {
         $promos = Promo::all();
-        return view('admin.promos.index', compact('promos'));
+        return view('pages.admin.promos.index', compact('promos'));
     }
 
     public function create() {
-        return view('admin.promos.create');
+        return view('pages.admin.promos.create');
     }
 
     public function store(Request $request)
@@ -45,7 +45,7 @@ class AdminPromoController extends Controller
     }
 
     public function edit(Promo $promo) {
-        return view('admin.promos.create', compact('promo')); // reuse create view for edit
+        return view('pages.admin.promos.create', compact('promo')); // reuse create view for edit
     }
 
     public function update(Request $request, Promo $promo) {

@@ -227,7 +227,7 @@
       <img src="{{ asset('images/logo.png') }}" alt="Samafitro" class="logo">
       <nav class="nav-list-desktop">
         <ul>
-          <li><a href="{{ url('/') }}" class="{{ (Request::is('/') || Request::is('') || Request::is('beranda') || Request::routeIs('home')) ? 'active-nav' : '' }}">Beranda</a></li>
+          <li><a href="{{ url('/beranda') }}" class="{{ (Request::is('/') || Request::is('') || Request::is('beranda') || Request::routeIs('home')) ? 'active-nav' : '' }}">Beranda</a></li>
           <li><a href="{{ url('/tentangkami') }}" class="{{ Request::is('tentangkami') ? 'active-nav' : '' }}">Tentang Kami</a></li>
           <li><a href="{{ url('/produk') }}" class="{{ Request::is('produk') ? 'active-nav' : '' }}">Produk</a></li>
           <li><a href="{{ url('/kantor-cabang') }}" class="{{ Request::is('kantor-cabang') ? 'active-nav' : '' }}">Kantor Cabang</a></li>
@@ -252,7 +252,7 @@
   <!-- mobile nav -->
   <div class="nav-wrapper" id="nav-wrapper">
     <nav class="nav-left">
-      <a href="{{ url('/') }}" class="{{ (Request::is('/') || Request::is('') || Request::is('beranda') || Request::routeIs('home')) ? 'active-nav' : '' }}">Beranda</a>
+      <a href="{{ url('/beranda') }}" class="{{ (Request::is('/') || Request::is('') || Request::is('beranda') || Request::routeIs('home')) ? 'active-nav' : '' }}">Beranda</a>
       <a href="{{ url('/tentangkami') }}" class="{{ Request::is('tentangkami') ? 'active-nav' : '' }}">Tentang Kami</a>
       <a href="{{ url('/produk') }}" class="{{ Request::is('produk') ? 'active-nav' : '' }}">Produk</a>
       <a href="{{ url('/kantor-cabang') }}" class="{{ Request::is('kantor-cabang') ? 'active-nav' : '' }}">Kantor Cabang</a>

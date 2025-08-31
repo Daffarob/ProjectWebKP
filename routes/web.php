@@ -80,101 +80,9 @@ Route::get('/produk/json', function () {
     ]);
 });
 
-// Halaman admin
-Route::get('/produksales/admin', function () {
-    $categories = Category::all();
-    $products = Product::with('category')->get();
-    return view('admin.produk', compact('categories', 'products'));
-})->name('admin.produk');
 
-// Simpan produk baru
-Route::post('/admin/produk', function (\Illuminate\Http\Request $request) {
-    $request->validate([
-        'nama_produk' => 'required|string|max:255',
-        'kategori_id' => 'required|exists:categories,id',
-        'spec_labels' => 'required|array',
-        'spec_labels.*' => 'required|string|max:100',
-        'spec_values' => 'required|array',
-        'spec_values.*' => 'required|string|max:255',
-        'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048', // ✅ Perbaikan
-    ]);
 
-    // Generate ID unik
-    $id = uniqid('prod_');
 
-    // Format spesifikasi
-    $specifications = [];
-    for ($i = 0; $i < count($request->spec_labels); $i++) {
-        $specifications[] = [
-            'label' => $request->spec_labels[$i],
-            'value' => $request->spec_values[$i]
-        ];
-    }
-
-    // ✅ Simpan gambar ke storage
-    $path = $request->file('gambar')->store('products', 'public');
-
-    // Simpan ke database
-    \App\Models\Product::create([
-        'id' => $id,
-        'kategori_id' => $request->kategori_id,
-        'nama_produk' => $request->nama_produk,
-        'deskripsi' => $specifications,
-        'gambar' => '/storage/' . $path, // URL akses publik
-    ]);
-
-    return redirect()->back()->with('success', 'Produk berhasil ditambahkan');
-})->name('admin.produk.store');
-// Update produk
-Route::put('/admin/produk/update/{id}', function (\Illuminate\Http\Request $request, $id) {
-    $request->validate([
-        'nama_produk' => 'required|string|max:255',
-        'kategori_id' => 'required|exists:categories,id',
-        'spec_labels' => 'required|array',
-        'spec_labels.*' => 'required|string|max:100',
-        'spec_values' => 'required|array',
-        'spec_values.*' => 'required|string|max:255',
-        'gambar' => 'nullable|image|mimes:png,jpg,jpeg|max:2048', // nullable karena opsional
-    ]);
-
-    $product = \App\Models\Product::findOrFail($id);
-
-    // Format spesifikasi
-    $specifications = [];
-    for ($i = 0; $i < count($request->spec_labels); $i++) {
-        $specifications[] = [
-            'label' => $request->spec_labels[$i],
-            'value' => $request->spec_values[$i]
-        ];
-    }
-
-    // Jika ada gambar baru, simpan
-    if ($request->hasFile('gambar')) {
-        // Hapus gambar lama (opsional)
-        // ...
-
-        $path = $request->file('gambar')->store('products', 'public');
-        $gambarPath = '/storage/' . $path;
-    } else {
-        $gambarPath = $product->gambar;
-    }
-
-    // Update produk
-    $product->update([
-        'kategori_id' => $request->kategori_id,
-        'nama_produk' => $request->nama_produk,
-        'deskripsi' => $specifications,
-        'gambar' => $gambarPath,
-    ]);
-
-    return redirect()->back()->with('success', 'Produk berhasil diperbarui');
-})->name('admin.produk.update');
-
-// Hapus produk
-Route::delete('/admin/produk/delete/{id}', function ($id) {
-    Product::destroy($id);
-    return redirect()->back()->with('success', 'Produk berhasil dihapus');
-})->name('admin.produk.delete');
 
 
 // ========================
@@ -197,13 +105,18 @@ Route::middleware('auth')->group(function () {
     // Artikel user
     Route::get('/artikel', [UserArticleController::class, 'index'])->name('article.index');
     Route::get('/artikel/{id}', [UserArticleController::class, 'show'])->name('article.show');
+
+    // Produk user (logged-in)
+    Route::get('/produk-user', function () {
+        return view('pages.loggedin.produk');
+    })->name('produk.user');
 });
 
 
 // ========================
-// 🔒 ADMIN SECTION (tanpa middleware dulu)
+// 🔒 ADMIN SECTION (protected by admin middleware)
 // ========================
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     // Dashboard Admin
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
@@ -225,6 +138,116 @@ Route::prefix('admin')->group(function () {
 
     // Halaman statis: Hubungi Kami
     Route::view('/contact', 'admin.contact')->name('admin.contact');
+
+    // Produk Admin
+    Route::prefix('produk')->name('admin.produk.')->group(function () {
+        Route::get('/', function () {
+            $categories = Category::all();
+            $products = Product::with('category')->get();
+            return view('pages.admin.produk', compact('categories', 'products'));
+        })->name('index');
+        
+        Route::post('/store', function (\Illuminate\Http\Request $request) {
+            try {
+                $request->validate([
+                    'nama_produk' => 'required|string|max:255',
+                    'kategori_id' => 'required|exists:categories,id',
+                    'spec_labels' => 'required|array',
+                    'spec_labels.*' => 'required|string|max:100',
+                    'spec_values' => 'required|array',
+                    'spec_values.*' => 'required|string|max:255',
+                    'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+                ]);
+
+                // Format spesifikasi
+                $specifications = [];
+                for ($i = 0; $i < count($request->spec_labels); $i++) {
+                    $specifications[] = [
+                        'label' => $request->spec_labels[$i],
+                        'value' => $request->spec_values[$i]
+                    ];
+                }
+
+                // Simpan gambar
+                $path = $request->file('gambar')->store('products', 'public');
+                $gambarPath = '/storage/' . $path;
+
+                // Generate unique ID untuk produk
+                $productId = 'prod_' . uniqid() . '_' . time();
+
+                // Buat produk baru
+                $product = Product::create([
+                    'id' => $productId,
+                    'nama_produk' => $request->nama_produk,
+                    'kategori_id' => $request->kategori_id,
+                    'deskripsi' => $specifications,
+                    'gambar' => $gambarPath,
+                ]);
+
+                return redirect()->back()->with('success', 'Produk berhasil ditambahkan dengan ID: ' . $product->id);
+            } catch (\Exception $e) {
+                \Log::error('Error creating product: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Gagal menambahkan produk: ' . $e->getMessage())->withInput();
+            }
+        })->name('store');
+
+        Route::put('/update/{id}', function (\Illuminate\Http\Request $request, $id) {
+            try {
+                $request->validate([
+                    'nama_produk' => 'required|string|max:255',
+                    'kategori_id' => 'required|exists:categories,id',
+                    'spec_labels' => 'required|array',
+                    'spec_labels.*' => 'required|string|max:100',
+                    'spec_values' => 'required|array',
+                    'spec_values.*' => 'required|string|max:255',
+                    'gambar' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+                ]);
+
+                $product = Product::findOrFail($id);
+
+                // Format spesifikasi
+                $specifications = [];
+                for ($i = 0; $i < count($request->spec_labels); $i++) {
+                    $specifications[] = [
+                        'label' => $request->spec_labels[$i],
+                        'value' => $request->spec_values[$i]
+                    ];
+                }
+
+                // Jika ada gambar baru, simpan
+                if ($request->hasFile('gambar')) {
+                    $path = $request->file('gambar')->store('products', 'public');
+                    $gambarPath = '/storage/' . $path;
+                } else {
+                    $gambarPath = $product->gambar;
+                }
+
+                // Update produk
+                $product->update([
+                    'kategori_id' => $request->kategori_id,
+                    'nama_produk' => $request->nama_produk,
+                    'deskripsi' => $specifications,
+                    'gambar' => $gambarPath,
+                ]);
+
+                return redirect()->back()->with('success', 'Produk berhasil diperbarui');
+            } catch (\Exception $e) {
+                \Log::error('Error updating product: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Gagal memperbarui produk: ' . $e->getMessage())->withInput();
+            }
+        })->name('update');
+
+        Route::delete('/delete/{id}', function ($id) {
+            try {
+                $product = Product::findOrFail($id);
+                $product->delete();
+                return redirect()->back()->with('success', 'Produk berhasil dihapus');
+            } catch (\Exception $e) {
+                \Log::error('Error deleting product: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Gagal menghapus produk: ' . $e->getMessage());
+            }
+        })->name('delete');
+    });
 });
 
 

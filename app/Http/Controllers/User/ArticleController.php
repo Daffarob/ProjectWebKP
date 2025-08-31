@@ -10,13 +10,13 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::latest()->get();
-        return view('User.article', compact('articles')); // pastikan file-nya article/index.blade.php
+        return view('pages.loggedin.article', compact('articles')); // pastikan file-nya article/index.blade.php
     }
 
     public function show($id)
 {
     $article = Article::findOrFail($id);
-    return view('User.article.show', compact('article'));
+    return view('pages.loggedin.article.show', compact('article'));
 }
 
 }

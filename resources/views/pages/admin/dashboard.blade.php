@@ -1,82 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard Samafitro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.admin')
 
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+@section('title', 'Admin Dashboard Samafitro')
 
-    <!-- Font Awesome Free CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    <!-- AlpineJS -->
-    <script src="https://unpkg.com/alpinejs" defer></script>
-
-    <!-- Custom Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2563eb',
-                        dark: '#0f172a',
-                        light: '#e2e8f0',
-                    }
-                }
-            }
-        }
-    </script>
-        <script>
-        function toggleMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-    </script>
-</head>
-<body class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen">
-
-    <!-- Navbar -->
-    <nav class="bg-gray-950 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="#" class="flex items-center">
-                <img src="{{ asset('images/logo-samafitro.png') }}" alt="Samafitro" class="h-16 mr-3">
-            </a>
-
-            <!-- Desktop Menu -->
-            <ul class="hidden md:flex space-x-6 text-sm font-medium">
-                <li><a href="{{ route('admin.dashboard') }}" class="hover:text-indigo-400 transition">Edit Beranda</a></li>
-                <li><a href="#" class="hover:text-indigo-400 transition">Edit Produk</a></li>
-                <li><a href="{{ route('admin.promos.index') }}" class="hover:text-indigo-400 transition">Edit Promo</a></li>
-                <li><a href="{{ route('admin.articles.index') }}" class="hover:text-indigo-400 transition">Edit Artikel & Berita</a></li>
-                <li><a href="#" class="hover:text-indigo-400 transition">Hubungi Kami</a></li>
-            </ul>
-
-            <!-- Icons -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="#"><img src="/images/cart.png" class="h-6"></a>
-                <a href="{{ route('User.profile.index') }}"><img src="/images/profile.png" class="h-6"></a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden text-white focus:outline-none" onclick="toggleMenu()">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 px-4 py-3 space-y-2">
-            <a href="{{ route('admin.dashboard') }}" class="block hover:text-indigo-400">Edit Beranda</a>
-            <a href="#" class="block hover:text-indigo-400">Edit Produk</a>
-            <a href="{{ route('admin.promos.index') }}" class="block text-indigo-400 font-semibold">Edit Promo</a>
-            <a href="{{ route('admin.articles.index') }}" class="block hover:text-indigo-400">Edit Artikel & Berita</a>
-            <a href="#" class="block hover:text-indigo-400">Hubungi Kami</a>
-            <div class="flex items-center space-x-4 pt-2 border-t border-gray-700">
-                <a href="#"><img src="/images/cart.png" class="h-6"></a>
-                <a href="{{ route('User.profile.index') }}"><img src="/images/profile.png" class="h-6"></a>
-            </div>
-        </div>
-    </nav>
+@section('content')
 
     <!-- Form Input -->
     <section class="max-w-6xl mx-auto px-4 py-10">
@@ -100,6 +26,36 @@
                 </button>
             </div>
         </form>
+    </section>
+
+    <!-- Quick Access Section -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+        <h2 class="text-2xl font-bold mb-6 text-white">Quick Access</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="{{ route('admin.produk.index') }}" class="bg-blue-600 hover:bg-blue-700 transition p-6 rounded-xl text-center text-white">
+                <i class="fas fa-box text-3xl mb-3"></i>
+                <h3 class="text-lg font-semibold">Kelola Produk</h3>
+                <p class="text-sm text-blue-100">Tambah, edit, hapus produk</p>
+            </a>
+            
+            <a href="{{ route('admin.promos.index') }}" class="bg-green-600 hover:bg-green-700 transition p-6 rounded-xl text-center text-white">
+                <i class="fas fa-tags text-3xl mb-3"></i>
+                <h3 class="text-lg font-semibold">Kelola Promo</h3>
+                <p class="text-sm text-green-100">Tambah, edit, hapus promo</p>
+            </a>
+            
+            <a href="{{ route('admin.articles.index') }}" class="bg-purple-600 hover:bg-purple-700 transition p-6 rounded-xl text-center text-white">
+                <i class="fas fa-newspaper text-3xl mb-3"></i>
+                <h3 class="text-lg font-semibold">Kelola Artikel</h3>
+                <p class="text-sm text-purple-100">Tambah, edit, hapus artikel</p>
+            </a>
+            
+            <a href="{{ route('admin.contact') }}" class="bg-orange-600 hover:bg-orange-700 transition p-6 rounded-xl text-center text-white">
+                <i class="fas fa-envelope text-3xl mb-3"></i>
+                <h3 class="text-lg font-semibold">Hubungi Kami</h3>
+                <p class="text-sm text-orange-100">Kelola kontak</p>
+            </a>
+        </div>
     </section>
 
     <!-- Data Grid -->
@@ -176,7 +132,4 @@
     </div>
 </footer>
 
-    {{-- Alpine.js --}}
-    <script src="//unpkg.com/alpinejs" defer></script>
-</body>
-</html>
+@endsection

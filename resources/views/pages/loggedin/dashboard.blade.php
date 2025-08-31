@@ -1,96 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard Samafitro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.loggedin')
 
-    @vite('resources/css/app.css')
-    <script src="https://unpkg.com/alpinejs" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
-        <style>
-        .floating-wa { 
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .floating-wa img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        .floating-wa:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 14px rgba(0, 255, 0, 0.5);
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
-{{-- Navbar --}}
-<nav x-data="{ open: false }" class="bg-gray-950 shadow fixed top-0 left-0 w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+@section('title', 'Dashboard Samafitro')
 
-        {{-- Logo --}}
-        <div class="flex items-center space-x-3">
-            <img src="{{ asset('images/logo-samafitro.png') }}" alt="Samafitro" class="h-12 md:h-16 w-auto max-h-14">
-        </div>
-
-        {{-- Desktop Menu --}}
-        <ul class="hidden md:flex flex-wrap space-x-4 lg:space-x-8 text-xs md:text-sm font-medium text-white">
-            <li><a href="{{ route('dashboard') }}" class="hover:text-blue-400">Beranda</a></li>
-            <li><a href="#" class="hover:text-blue-400">Produk</a></li>
-            <li><a href="{{ route('promo.index') }}" class="hover:text-blue-400">Promo</a></li>
-            <li><a href="{{ route('article.index') }}" class="hover:text-blue-400">Artikel & Berita</a></li>
-            <li><a href="#" class="hover:text-blue-400">Hubungi Kami</a></li>
-        </ul>
-
-        {{-- Desktop Icons --}}
-        <div class="hidden md:flex space-x-4">
-            <a href="#"><img src="/images/cart.png" alt="Cart" class="h-6 w-6 hover:opacity-80 transition duration-200" /></a>
-            <a href="{{ route('User.profile.index') }}"><img src="/images/profile.png" alt="User" class="h-6 w-6 hover:opacity-80 transition duration-200" /></a>
-        </div>
-
-        {{-- Mobile Hamburger --}}
-        <div class="md:hidden flex items-center space-x-4">
-            <a href="#"><img src="/images/cart.png" alt="Cart" class="h-6 w-6 hover:opacity-80 transition duration-200" /></a>
-            <a href="{{ route('User.profile.index') }}"><img src="/images/profile.png" alt="User" class="h-6 w-6 hover:opacity-80 transition duration-200" /></a>
-            <button @click="open = !open" class="text-white focus:outline-none ml-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    {{-- Mobile Menu --}}
-    <div x-show="open" x-transition
-         class="md:hidden absolute top-full left-0 w-full bg-gray-950 border-t border-gray-800">
-        <ul class="flex flex-col space-y-3 px-6 py-4 text-white text-sm">
-            <li><a href="{{ route('dashboard') }}" class="hover:text-blue-400">Beranda</a></li>
-            <li><a href="#" class="hover:text-blue-400">Produk</a></li>
-            <li><a href="{{ route('promo.index') }}" class="hover:text-blue-400">Promo</a></li>
-            <li><a href="{{ route('article.index') }}" class="hover:text-blue-400">Artikel & Berita</a></li>
-            <li><a href="#" class="hover:text-blue-400">Hubungi Kami</a></li>
-        </ul>
-    </div>
-</nav>
-
-{{-- Tambahkan padding di awal halaman supaya konten tidak ketimpa --}}
-<div class="pt-20"></div>
-
-{{-- Pastikan Alpine.js ter-load --}}
-<script src="//unpkg.com/alpinejs" defer></script>
-
-
+@section('content')
     {{-- Carousel --}}
     <section x-data="carousel()" x-init="start()" class="max-w-7xl mx-auto px-4 py-14">
         <div class="relative overflow-hidden h-[400px] md:h-[600px] rounded-3xl shadow-2xl bg-gray-900">
@@ -98,16 +10,35 @@
                 <div x-show="activeIndex === index" x-transition class="absolute inset-0 md:relative flex flex-col md:flex-row items-center w-full h-full">
                     <div class="w-full md:w-1/2 bg-black/40 backdrop-blur-md p-6 sm:p-8 md:p-12 flex flex-col justify-center space-y-4">
                         <h2 class="text-white text-2xl sm:text-3xl md:text-4xl font-bold" x-text="slide.title"></h2>
-                        <h3 class="text-blue-400 text-lg md:text-xl font-semibold" x-text="slide.brand"></h3>
-                        <p class="text-gray-200 text-sm sm:text-base md:text-lg" x-text="slide.description"></p>
+                        <p class="text-blue-300 text-lg md:text-xl font-medium" x-text="slide.brand"></p>
+                        <p class="text-gray-300 text-sm md:text-base" x-text="slide.description"></p>
                     </div>
-                    <div class="w-full md:w-1/2 flex items-center justify-center p-4">
-                        <img :src="slide.image" alt="Slide Image" class="max-h-[300px] sm:max-h-[400px] md:max-h-[500px] object-contain rounded-xl shadow-lg">
+                    <div class="w-full md:w-1/2 h-full flex items-center justify-center p-4">
+                        <img :src="slide.image" :alt="slide.title" class="object-contain w-full h-full max-h-[300px] md:max-h-[500px]">
                     </div>
                 </div>
             </template>
-            <button @click="prev" class="absolute top-1/2 left-2 sm:left-6 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-3xl px-3 py-1 rounded-full z-10">‹</button>
-            <button @click="next" class="absolute top-1/2 right-2 sm:right-6 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-3xl px-3 py-1 rounded-full z-10">›</button>
+
+            {{-- Navigation Arrows --}}
+            <button @click="prev()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button @click="next()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
+            {{-- Dots Indicator --}}
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+                <template x-for="(slide, index) in slides" :key="index">
+                    <button @click="activeIndex = index" 
+                            :class="activeIndex === index ? 'bg-blue-500' : 'bg-gray-400'"
+                            class="w-3 h-3 rounded-full transition-all duration-300"></button>
+                </template>
+            </div>
         </div>
     </section>
 
@@ -185,6 +116,21 @@
     </div>
 </section>
 
+{{-- Items dari database --}}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach ($items as $item)
+            <div class="bg-gray-800 rounded-xl p-4 shadow hover:shadow-xl transition">
+                <h3 class="text-lg font-semibold mb-2">{{ $item->judul }}</h3>
+                <p class="text-gray-300 text-sm mb-3">{{ $item->deskripsi }}</p>
+                @if ($item->gambar)
+                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="rounded-lg w-full object-cover max-h-52">
+                @endif
+            </div>
+        @endforeach
+    </div>
+</section>
+
     {{-- Items dari database --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -199,63 +145,43 @@
             @endforeach
         </div>
     </section>
-     {{-- Floating WhatsApp --}}
+
+    {{-- Quick Actions Section --}}
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+            <h3 class="text-xl font-semibold text-white mb-4">Quick Actions</h3>
+            <div class="flex flex-wrap gap-4">
+                <a href="{{ route('User.profile.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-user mr-2"></i>View Profile
+                </a>
+                <a href="{{ route('promo.index') }}" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-tags mr-2"></i>View Promos
+                </a>
+                <a href="{{ route('article.index') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-newspaper mr-2"></i>Read Articles
+                </a>
+                <a href="{{ route('produk.user') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-box mr-2"></i>Browse Products
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+@endsection
+
+@section('floating-wa')
+    {{-- Floating WhatsApp --}}
     <a href="https://wa.me/6281234567890" target="_blank" class="floating-wa">
         <img src="{{ asset('images/buttonwa.png') }}" alt="WhatsApp">
     </a>
+@endsection
 
-    {{-- Footer --}}
-<footer class="bg-gray-900 py-10 text-white text-sm">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-10">
-        <div class="flex-shrink-0">
-            <img src="{{ asset('images/logo-samafitro.png') }}" alt="Samafitro Logo" class="h-20 sm:h-24">
-        </div>
-        <div>
-            <h3 class="text-lg font-semibold mb-4">Social Media Kami :</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/email.png') }}" alt="Email" class="h-5 w-5">
-                    <span>samafitro_bdg@samafitro.co.id</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/instagram.png') }}" alt="Instagram" class="h-5 w-5">
-                    <span>@samafitro_bandung</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/youtube.png') }}" alt="YouTube" class="h-5 w-5">
-                    <span>Samafitro Bandung</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/tokopedia.png') }}" alt="Store" class="h-5 w-5">
-                    <span>Official Store</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/facebook.png') }}" alt="Facebook" class="h-5 w-5">
-                    <span>@SamafitroBandung</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('images/tiktok.png') }}" alt="TikTok" class="h-5 w-5">
-                    <span>@samafitro.bandung</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="mt-8 border-t border-gray-700 pt-4 text-center">
-        <p class="flex items-center justify-center gap-2">
-            <span>Copyright</span>
-            <img src="{{ asset('images/ccopyright.png') }}" alt="Copyright" class="h-4 w-4">
-            <span>2025 Cabang PT Samafitro Bandung</span>
-        </p>
-        <p>Oleh Tim Developer Kami</p>
-    </div>
-</footer>
-
+@section('additional-scripts')
     <script>
         function carousel() {
             return {
@@ -272,5 +198,4 @@
             };
         }
     </script>
-</body>
-</html>
+@endsection

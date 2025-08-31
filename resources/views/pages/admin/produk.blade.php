@@ -1,6 +1,9 @@
-@extends('layouts.default')
-@section('content')
 
+@extends('layouts.admin')
+
+@section('title', 'Kelola Produk | Samafitro')
+
+@section('content')
 <style>
     body {
     background-color: #1e1e1ee6; /* Warna gelap */
@@ -420,6 +423,8 @@
 }
 </style>
 
+
+
 <div class="admin-container">
     <h2 style="text-align: center; margin-bottom: 30px; color: #6e6e6eff;">  </h2>
     
@@ -532,7 +537,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal Edit -->
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -814,6 +818,4 @@
         }
     });
 </script>
-
-
 @endsection

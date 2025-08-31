@@ -2,52 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    // Tampilkan halaman profil (optional, bisa sebagai ringkasan profil)
+    // Tampilkan halaman profil
     public function index()
     {
-        $profile = Profile::first();
-
-        // Cek apakah data profil ada
-        if (!$profile) {
-            return redirect()->route('profile.edit')->with('warning', 'Silakan lengkapi profil Anda terlebih dahulu.');
+        $user = Auth::user();
+        
+        if (!$user) {
+            return redirect()->route('login');
         }
 
-        return view('User.profile.index', compact('profile'));
+        return view('pages.loggedin.profile.index', compact('user'));
     }
 
     // Tampilkan form edit profil
     public function edit()
-{
-    $profile = Profile::first();
+    {
+        $user = Auth::user();
+        
+        if (!$user) {
+            return redirect()->route('login');
+        }
 
-    if (!$profile) {
-        $profile = Profile::create([
-            'name' => '',
-            'email' => '',
-            'phone' => '',
-            'address' => '',
-            'photo' => '',
-            'password' => bcrypt('defaultpassword'), // ← Tambahkan ini
-        ]);
+        return view('pages.loggedin.profile.edit', compact('user'));
     }
-
-    return view('User.profile.edit', compact('profile'));
-}
 
     // Simpan hasil update profil
     public function update(Request $request)
     {
-        $profile = Profile::first();
+        $user = Auth::user();
+        
+        if (!$user) {
+            return redirect()->route('login');
+        }
 
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -64,7 +61,7 @@ class ProfileController extends Controller
         }
 
         // Simpan update data
-        $profile->update($data);
+        $user->update($data);
 
         return redirect()->route('User.profile.edit')->with('success', 'Profil berhasil diperbarui!');
     }

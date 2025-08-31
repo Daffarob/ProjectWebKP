@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $items = DashboardItem::latest()->get();
-        return view('admin.dashboard', compact('items'));
+        return view('pages.admin.dashboard', compact('items'));
     }
 
     /**
@@ -35,7 +35,7 @@ class DashboardController extends Controller
 
         DashboardItem::create($data);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil ditambahkan.');
+        return redirect()->route('pages.admin.dashboard')->with('success', 'Item berhasil ditambahkan.');
     }
 
     /**

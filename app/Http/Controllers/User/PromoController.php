@@ -12,11 +12,11 @@ class PromoController extends Controller
         // Ambil semua data promo dari database, urut terbaru
         $promos = Promo::latest()->get();
 
-        return view('user.promo.index', compact('promos'));
+        return view('pages.loggedin.promo.index', compact('promos'));
     }
     public function show(Promo $promo)
     {
         // $promo adalah model yang di-binding otomatis (id)
-        return view('User.promo.show', compact('promo'));
+        return view('pages.loggedin.promo.show', compact('promo'));
     }
 }

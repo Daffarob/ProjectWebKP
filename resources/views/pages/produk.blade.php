@@ -206,7 +206,7 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 16px 40px 16px; /* Added bottom padding */
   box-sizing: border-box;
 }
 
@@ -407,7 +407,7 @@ header {
 }
 
 .produk-tab-content {
-  padding: 32px 24px;
+  padding: 32px 24px 40px 24px; /* Added bottom padding */
   min-height: 500px;
 }
 
@@ -453,7 +453,7 @@ header {
     border-top: 4px solid #222;
   }
   .produk-tab-content {
-    padding: 18px 0vw 24px 0vw;
+    padding: 18px 0vw 40px 0vw; /* Added bottom padding */
     min-height: 300px;
     max-width: fit-content;
   }
@@ -629,7 +629,7 @@ select:focus {
 
 
 
-<div x-data="produkPage()" x-init="init()" class="container" x-cloak>
+<div x-data="produkPage()" x-init="init()" class="container" x-cloak style="padding-bottom: 60px; max-width: 1200px; margin: 0 auto;">
   <div class="katalog-header">
     <h1>Produk Kami</h1>
     <p>Silakan pilih kategori untuk menampilkan produk yang Anda cari</p>
@@ -654,7 +654,7 @@ select:focus {
       </div>
     </div>
   </div>
-  <div class="produk-tab-grid">
+  <div class="produk-tab-grid" style="margin: 0 auto; max-width: 1200px;">
   <!-- Mobile Dropdown -->
 <div class="produk-tab-mobile-dropdown" x-show="isMobile">
   <div class="dropdown-card">
