@@ -236,8 +236,12 @@
       </nav>
     </div>
     <div class="header-group-right">
-      <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
-      <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @auth
+        <a href="{{ url('/dashboard') }}" class="btn-nav">Dashboard</a>
+      @else
+        <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
+        <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @endauth
     </div>
     <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-wrapper" id="hamburger-btn" type="button">
       <span></span>
@@ -253,8 +257,12 @@
       <a href="{{ url('/produk') }}" class="{{ Request::is('produk') ? 'active-nav' : '' }}">Produk</a>
       <a href="{{ url('/kantor-cabang') }}" class="{{ Request::is('kantor-cabang') ? 'active-nav' : '' }}">Kantor Cabang</a>
       <a href="{{ url('/hubungi-kami') }}" class="{{ Request::is('hubungi-kami') ? 'active-nav' : '' }}">Hubungi Kami</a>
-      <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
-      <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @auth
+        <a href="{{ url('/dashboard') }}" class="btn-nav">Dashboard</a>
+      @else
+        <a href="{{ url('/login') }}" class="btn-nav">Masuk</a>
+        <a href="{{ url('/register') }}" class="btn-nav">Daftar</a>
+      @endauth
     </nav> 
   </div>
 </header>

@@ -184,18 +184,20 @@ Route::delete('/admin/produk/delete/{id}', function ($id) {
 // Halaman utama (welcome)
 Route::view('/', 'welcome')->name('home');
 
-// Dashboard & profile (sementara tanpa auth)
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/profile', [ProfileController::class, 'index'])->name('User.profile.index');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('User.profile.edit');
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('User.profile.update');
-// Halaman promo untuk user
-Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
-Route::get('/promo/{promo}', [PromoController::class, 'show'])->name('promo.show');
+// Dashboard & profile (protected by auth)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('User.profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('User.profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('User.profile.update');
+    // Halaman promo untuk user
+    Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
+    Route::get('/promo/{promo}', [PromoController::class, 'show'])->name('promo.show');
 
-// Artikel user
-Route::get('/artikel', [UserArticleController::class, 'index'])->name('article.index');
-Route::get('/artikel/{id}', [UserArticleController::class, 'show'])->name('article.show');
+    // Artikel user
+    Route::get('/artikel', [UserArticleController::class, 'index'])->name('article.index');
+    Route::get('/artikel/{id}', [UserArticleController::class, 'show'])->name('article.show');
+});
 
 
 // ========================
@@ -229,4 +231,4 @@ Route::prefix('admin')->group(function () {
 // ========================
 // 🔐 AUTH (Laravel Breeze/Jetstream/etc.)
 // ========================
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php'; // Commented out to use traditional authentication

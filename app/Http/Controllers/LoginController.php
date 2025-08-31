@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); // Pastikan file login.blade.php berada di resources/views/auth/
+        return view('pages.auth.login'); // Fixed path to match the actual view location
     }
 
     public function login(Request $request)
@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/'); // Redirect ke halaman utama
+            return redirect()->intended('/dashboard'); // Redirect to dashboard instead of home
         }
 
         return back()->withErrors([
